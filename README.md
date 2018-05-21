@@ -1,48 +1,115 @@
 # Semantic Segmentation
 ### Introduction
-In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN).
+The goal of this project is to classify every pixel of the image to find the drivable portion using a Fully Convolutional neural network based on VGG16 architecture.
 
-### Setup
-##### GPU
-`main.py` will check to make sure you are using GPU - if you don't have a GPU on your system, you can use AWS or another cloud computing platform.
-##### Frameworks and Packages
-Make sure you have the following is installed:
- - [Python 3](https://www.python.org/)
- - [TensorFlow](https://www.tensorflow.org/)
- - [NumPy](http://www.numpy.org/)
- - [SciPy](https://www.scipy.org/)
-##### Dataset
-Download the [Kitti Road dataset](http://www.cvlibs.net/datasets/kitti/eval_road.php) from [here](http://www.cvlibs.net/download.php?file=data_road.zip).  Extract the dataset in the `data` folder.  This will create the folder `data_road` with all the training a test images.
+### Architecture
 
-### Start
-##### Implement
-Implement the code in the `main.py` module indicated by the "TODO" comments.
-The comments indicated with "OPTIONAL" tag are not required to complete.
-##### Run
-Run the following command to run the project:
-```
-python main.py
-```
-**Note** If running this in Jupyter Notebook system messages, such as those regarding test status, may appear in the terminal rather than the notebook.
+Have used pretrained VGG-16 model which was modified to create fully convolutional neural network by adding 1x1 convolution to final layer which is then connected to 4th layer and 3rd layer using skip connection to improve performance. 
+Kernel and Strides values are taken from classroom code .
 
-### Submission
-1. Ensure you've passed all the unit tests.
-2. Ensure you pass all points on [the rubric](https://review.udacity.com/#!/rubrics/989/view).
-3. Submit the following in a zip file.
- - `helper.py`
- - `main.py`
- - `project_tests.py`
- - Newest inference images from `runs` folder  (**all images from the most recent run**)
- 
- ### Tips
-- The link for the frozen `VGG16` model is hardcoded into `helper.py`.  The model can be found [here](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/vgg.zip)
-- The model is not vanilla `VGG16`, but a fully convolutional version, which already contains the 1x1 convolutions to replace the fully connected layers. Please see this [forum post](https://discussions.udacity.com/t/here-is-some-advice-and-clarifications-about-the-semantic-segmentation-project/403100/8?u=subodh.malgonde) for more information.  A summary of additional points, follow. 
-- The original FCN-8s was trained in stages. The authors later uploaded a version that was trained all at once to their GitHub repo.  The version in the GitHub repo has one important difference: The outputs of pooling layers 3 and 4 are scaled before they are fed into the 1x1 convolutions.  As a result, some students have found that the model learns much better with the scaling layers included. The model may not converge substantially faster, but may reach a higher IoU and accuracy. 
-- When adding l2-regularization, setting a regularizer in the arguments of the `tf.layers` is not enough. Regularization loss terms must be manually added to your loss function. otherwise regularization is not implemented.
- 
-### Using GitHub and Creating Effective READMEs
-If you are unfamiliar with GitHub , Udacity has a brief [GitHub tutorial](http://blog.udacity.com/2015/06/a-beginners-git-github-tutorial.html) to get you started. Udacity also provides a more detailed free [course on git and GitHub](https://www.udacity.com/course/how-to-use-git-and-github--ud775).
+##### Hyper Parameters
 
-To learn about REAMDE files and Markdown, Udacity provides a free [course on READMEs](https://www.udacity.com/courses/ud777), as well. 
+Below are the final parameters values after hit and trial method.
+`Epoch : 40`
 
-GitHub also provides a [tutorial](https://guides.github.com/features/mastering-markdown/) about creating Markdown files.
+`Batch Size : 5 `
+
+`Learning Rate : 0.001`
+
+`Keep Probability : 0.8`
+
+
+##### Loss Values over Epoch
+
+`EPOCH :  0  Loss :  0.820696778339`
+
+`EPOCH :  1  Loss :  0.284700981245`
+
+`EPOCH :  2  Loss :  0.170167423528`
+
+`EPOCH :  3  Loss :  0.157447482234`
+
+`EPOCH :  4  Loss :  0.145678557584`
+
+`EPOCH :  5  Loss :  0.133306355954`
+
+`EPOCH :  6  Loss :  0.11424889377`
+
+`EPOCH :  7  Loss :  0.102359644747`
+
+`EPOCH :  8  Loss :  0.0944054434397`
+
+`EPOCH :  9  Loss :  0.100759724091`
+
+`EPOCH :  10  Loss :  0.0834884996173`
+
+`EPOCH :  11  Loss :  0.0730300499447`
+
+`EPOCH :  12  Loss :  0.0697741241291`
+
+`EPOCH :  13  Loss :  0.0648069519164`
+
+`EPOCH :  14  Loss :  0.0817101982519`
+
+`EPOCH :  15  Loss :  0.0703201437819`
+
+`EPOCH :  16  Loss :  0.0605596138871`
+
+`EPOCH :  17  Loss :  0.0553651421877`
+
+`EPOCH :  18  Loss :  0.0496094484396`
+
+`EPOCH :  19  Loss :  0.0497204409591`
+
+`EPOCH :  20  Loss :  0.0468561938033`
+
+`EPOCH :  21  Loss :  0.0440369737816`
+
+`EPOCH :  22  Loss :  0.0409398253622`
+
+`EPOCH :  23  Loss :  0.0594798678789`
+
+`EPOCH :  24  Loss :  0.0626442739419`
+
+`EPOCH :  25  Loss :  0.0548789497015`
+
+`EPOCH :  26  Loss :  0.0623420660609`
+
+`EPOCH :  27  Loss :  0.0961022931954`
+
+`EPOCH :  28  Loss :  0.0871832781182`
+
+`EPOCH :  29  Loss :  0.0817044183355`
+
+`EPOCH :  30  Loss :  0.0598558587953`
+
+`EPOCH :  31  Loss :  0.0466346137611`
+
+`EPOCH :  32  Loss :  0.044739155163`
+
+`EPOCH :  33  Loss :  0.0498478196176`
+
+`EPOCH :  34  Loss :  0.0619639965609`
+
+`EPOCH :  35  Loss :  0.0445585065232`
+
+`EPOCH :  36  Loss :  0.0379096520422`
+
+`EPOCH :  37  Loss :  0.0354083959045`
+
+`EPOCH :  38  Loss :  0.0331410406928`
+
+`EPOCH :  39  Loss :  0.0313383085846`
+
+
+### Result
+All the result is under folder `runs/1526906391.681863` . Below are few of the picks
+
+![image1](./runs/1526906391.681863/um_000067.png)
+![image2](./runs/1526906391.681863/um_000058.png)
+![image3](./runs/1526906391.681863/um_000032.png)
+![image4](./runs/1526906391.681863/uu_000098.png)
+![image5](./runs/1526906391.681863/uu_000093.png)
+![image6](./runs/1526906391.681863/um_000090.png)
+![image7](./runs/1526906391.681863/umm_000004.png)
+![image8](./runs/1526906391.681863/um_000082.png)
